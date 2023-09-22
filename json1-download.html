@@ -4,16 +4,32 @@
     <meta charset="utf-8"/>
     <title>JSON: Task 1</title>
     <style>
-      p {
-        color: purple;
-        margin: 0.5em 0;
-      }
+      /* Estilos para todos los párrafos */
+          p {
+            font-size: 1.2rem; /* Tamaño de fuente ligeramente más grande */
+            color: #6a5acd; /* Color de texto azul pizarra */
+            margin: 1em 0; /* Margen superior e inferior aumentado para un mejor espaciado */
+          }
 
-      * {
-        box-sizing: border-box;
-      }
+          /* Estilos globales */
+          * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+          }
+
+          /* Estilos para la sección de vista previa */
+          .preview {
+            background-color: #f0f0f0; /* Fondo gris claro para la sección de vista previa */
+            border: 1px solid #ccc; /* Borde ligero alrededor de la sección */
+            border-radius: 5px; /* Bordes redondeados para una apariencia más suave */
+            padding: 20px; /* Espaciado interno aumentado */
+            max-width: 800px; /* Ancho máximo para evitar que se extienda demasiado en pantallas anchas */
+            margin: 20px auto; /* Centrar la sección en la página */
+          }
+
     </style>
-    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="../styles.css" /> <!--Referencia a el archivo css-->
   </head>
 
   <body>
@@ -24,27 +40,27 @@
 
   </body>
   <script>
-    const section = document.querySelector('section');
+    const section = document.querySelector('section'); //seleciona el elemento section mediante document.querySelector().
 
-    let para1 = document.createElement('p');
+    let para1 = document.createElement('p'); //se definen dos elementos para.
     let para2 = document.createElement('p');
-    let motherInfo = 'The mother cats are called ';
-    let kittenInfo;
-    const requestURL = 'https://mdn.github.io/learning-area/javascript/oojs/tasks/json/sample.json';
+    let motherInfo = 'The mother cats are called '; //se asigna una cadena de texto.
+    let kittenInfo; //Variable que se usara para almacenar informacion de los gatitos.
+    const requestURL = 'https://mdn.github.io/learning-area/javascript/oojs/tasks/json/sample.json';  //archivo remoto JSON.
 
-    fetch(requestURL)
+    fetch(requestURL) //Se utiliza fetch para hacer una solicitud GET al archivo JSON
     .then(response => response.text())
-    .then(text => displayCatInfo(text))
+    .then(text => displayCatInfo(text)) //Cuando la solicitud se completa con éxito, se llama a la función displayCatInfo con el texto JSON como argumento.
 
     function displayCatInfo(catString) {
-      let total = 0;
-      let male = 0;
+      let total = 0; 
+      let male = 0; 
+      //De aca hasta * esta agregado.
+      const catData = JSON.parse(catString); //Analiza el texto JSON en un objeto JavaScript llamado catData.
 
-      const catData = JSON.parse(catString);
-
-      for (let i = 0; i < catData.length; i++) {
+      for (let i = 0; i < catData.length; i++) { //recorre los datos de los gatos para construir la cadena motherInfo, que contiene los nombres de las madres de los gatos.
         motherInfo += catData[i].name;
-        if (i === catData.length - 2) {
+        if (i === catData.length - 2) { //i es igual a catData.length - 2. Si es así, significa que estamos en el penúltimo elemento del arreglo catData.
           motherInfo += ' and ';
         } else if (i < catData.length - 1) {
           motherInfo += ', ';
@@ -55,7 +71,7 @@
       let totalGatitos = 0;
       let gatitosMachos = 0;
       let gatitasHembras = 0;
-
+      //Luego, cuenta el número total de gatitos y separa los gatitos machos y hembras para construir la cadena kittenInfo.
       for (const mother of catData) {
         for (const kitten of mother.kittens) {
           totalGatitos++;
@@ -66,11 +82,12 @@
           }
         }
       }
+    
+      // Construye la cadena "kittenInfo" con información sobre los gatitos
+      kittenInfo = `Hay ${totalGatitos} gatitos en total, hay ${gatitosMachos} machos y ${gatitasHembras} hembras.`; 
 
-    kittenInfo = `Hay ${totalGatitos} gatitos en total, hay ${gatitosMachos} machos y ${gatitasHembras} hembras.`;
-
-      // Don't edit the code below here!
-
+      // Don't edit the code below here! *
+      //se establece el contenido de los párrafos <p> creados anteriormente (para1 y para2) con la información recopilada y se agregan a la sección en la página.
       para1.textContent = motherInfo;
       para2.textContent = kittenInfo;
     }
